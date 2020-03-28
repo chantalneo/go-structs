@@ -41,12 +41,14 @@ func main() {
 	alex.print()
 	chantal.print()
 	jerry.print()
-	alex.updateName("Alec")
+
+	alexPointer := &alex
+	alexPointer.updateName("Alec")
 	alex.print() // Although we attempted to update Alex's first name to Alec, the update didn't seem to take effect. Explained in notes' point 3
 }
 
-func (p person) updateName(newFirstName string) {
-	p.firstName = newFirstName
+func (pointerToPerson *person) updateName(newFirstName string) {
+	(*pointerToPerson).firstName = newFirstName
 }
 
 func (p person) print() {
