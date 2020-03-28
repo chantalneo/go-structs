@@ -3,9 +3,9 @@ package main
 import "fmt"
 
 type person struct {
-	firstName string
-	lastName  string
-	contact   contactInfo
+	firstName   string
+	lastName    string
+	contactInfo // Different syntax from before, but this declares a field name of contactInfo and it also says that it's supposed to have a type contactInfo. This is equivalent to writing: contactInfo contactInfo
 }
 
 type contactInfo struct {
@@ -25,7 +25,7 @@ func main() {
 	chantal := person{
 		firstName: "Chantal",
 		lastName:  "Neo",
-		contact: contactInfo{
+		contactInfo: contactInfo{
 			email:   "chantal.neo@golang.com",
 			zipCode: 5412177,
 		},
@@ -33,15 +33,24 @@ func main() {
 	var jerry person // Third approach of declaring a new struct in Go. At this point, Go would prepopulate the different fields with zero value. Refer to point 2 for more information
 	jerry.firstName = "Jerry"
 	jerry.lastName = "Gan"
-	jerry.contact = contactInfo{
+	jerry.contactInfo = contactInfo{
 		email:   "jerry.gan@golang.com",
 		zipCode: 5201314,
 	}
 
-	fmt.Println(alex)
-	fmt.Println(chantal)
-	fmt.Println(jerry)
-	fmt.Printf("%+v", jerry) // Percent plus v right here would help us print out all the different field names and their values from Jerry
+	alex.print()
+	chantal.print()
+	jerry.print()
+	alex.updateName("Alec")
+	alex.print() // Although we attempted to update Alex's first name to Alec, the update didn't seem to take effect. This will be explained in the next topic about pointers in Go
+}
+
+func (p person) updateName(newFirstName string) {
+	p.firstName = newFirstName
+}
+
+func (p person) print() {
+	fmt.Printf("%+v", p) // Percent plus v right here would help us print out all the different field names and their values from variable p
 }
 
 // Notes:
