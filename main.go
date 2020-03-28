@@ -47,7 +47,7 @@ func main() {
 	alex.print() // Although we attempted to update Alex's first name to Alec, the update didn't seem to take effect. Explained in notes' point 3
 }
 
-func (pointerToPerson *person) updateName(newFirstName string) {
+func (pointerToPerson *person) updateName(newFirstName string) { // Check out notes' point 5
 	(*pointerToPerson).firstName = newFirstName
 }
 
@@ -110,3 +110,19 @@ func (p person) print() {
 //    But Go copy's that value it finds some other container that's empty and it stuffs that copy into that container and then it runs the code inside of updateName with this receiver
 //    pointing at that copy. And so when we modify that field of firstName inside of that function when we run this code right there where it says p.firstName is going to be newFirstName,
 //    we are not updating the original struct of alex. We were simplu updating the copy that was just made for our particular function call
+//
+//    4. Pointer Operators:
+//    &variable means to give me the memory address of the value this variable is pointing at. E.g. from Point 3, alexPointer of &alex would give me 0001
+//    *pointer  means to give me the value this memory is pointing at. E.g. from above's case, *alexPointer give me person{firstName: "Alex"...}
+//
+//    TL;DR:
+//    0001, the address, has a value of a person{firstName: "Alex"...}
+//    We turn address into value with *address
+//    We turn value into address with &value
+//
+//    5. func (pointerToPerson *person) updateName() {
+//		    *pointerToPerson
+//       }
+//
+//       *person is a type description - it means we're working with a pointer to a person. A.k.a. it means that this update main function can only be called with the receiver of a pointer to a person.
+//       *pointerToPerson is an operator - it means we want to manipulate the value the pointer is referencing
