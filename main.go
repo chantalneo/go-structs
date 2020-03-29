@@ -129,3 +129,117 @@ func (p person) print() {
 //    6.  Go allows us to take the shortcut and says hey if you have a variable that's just type of person but then your receiver is pointer to a person that's totally fine we'll just gloss
 //        over that fact for you and go will automatically turn your variable of type person into pointer person for you. That's why even though we removed alexPointer := &alex, the program
 //        still worked as intended
+
+// Quiz 7: Test Your Knowledge: Pointers
+// 1. Whenever you pass an integer, float, string, or struct into a function, what does Go do with that argument? It creates a copy of each argument, and these copies are used inside of the function
+// 2. What will the following program print out? The memory address that "Bill" is stored at
+/* 	package main
+	import "fmt"
+
+	func main() {
+   		name := "Bill"
+
+   	fmt.Println(&name)
+	} */
+// 3. What is the & operator used for? Turning a value into a pointer
+// 4. When you see a * operator in front of a pointer, what will it turn the pointer into? A value
+// 5. When the following program runs, the fmt.Println call reports that the latitude field of newYork is still equal to 40.73.
+// What changes should we make to get the latitude of newYork to update to 41.0? Change the receiver type of changeLatitude to *location, then replace lo with (*lo)
+// in the function body. This will turn the pointer lo into a value type and then update it
+/* 	package main
+	import "fmt"
+
+	type location struct {
+ 		longitude float64
+ 		latitude float64
+	}
+
+	func main() {
+ 		newYork := location{
+   			latitude: 40.73,
+   			longitude: -73.93,
+ 		}
+
+ 		newYork.changeLatitude()
+
+ 		fmt.Println(newYork)
+	}
+
+	func (lo location) changeLatitude() {
+ 		lo.latitude = 41.0
+	} */
+// 6. Take a look at the following snippet of code.
+/* 	package main
+
+	import "fmt"
+
+	type location struct {
+ 		longitude float64
+ 		latitude float64
+	}
+
+	func main() {
+ 		newYork := location{
+ 			latitude: 40.73,
+ 			longitude: -73.93,
+ 		}
+
+ 		newYork.changeLatitude()
+
+ 		fmt.Println(newYork)
+	}
+
+	func (lo *location) changeLatitude() {
+ 		(*lo).latitude = 41.0
+	} */
+// In the 'changeLatitude' function, what is *location in the receiver list (after the word 'func') communicating to us? It specifies the type of the receiver that the function expects
+// 7. Take a look at the following program. What will the Println function in the main function print out? "Bill"
+/* 	package main
+
+	import "fmt"
+
+	func main() {
+    	name := "Bill"
+    	updateValue(name)
+    	fmt.Println(name)
+	}
+
+	func updateValue(n string) {
+    	n = "Alex"
+	} */
+// 8. Take a look at the following program. The changeLatitude function expects a receiver of type pointer to a location struct, but in the main function the receiver is a value type
+//    of a struct. What will happen when this code is executed? This program uses a shortcut, where Go will automatically assume that even though newYork.changeLatitude() is using a value
+//    type, we probably meant to pass in a pointer to the newYork struct
+/* 	package main
+
+	import "fmt"
+
+	type location struct {
+ 		longitude float64
+ 		latitude float64
+	}
+
+	func main() {
+ 		newYork := location{
+   			latitude: 40.73,
+   			longitude: -73.93,
+ 		}
+
+ 		newYork.changeLatitude()
+
+ 		fmt.Println(newYork)
+	}
+
+	func (lo *location) changeLatitude() {
+ 		(*lo).latitude = 41.0
+	} */
+// 9. Here's a tricky one! What will the following program print out? The string "Bill"
+/* 	package main
+
+	import "fmt"
+
+	func main() {
+    	name := "Bill"
+
+    	fmt.Println(*&name)
+	} */
