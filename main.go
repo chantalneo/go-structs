@@ -42,8 +42,7 @@ func main() {
 	chantal.print()
 	jerry.print()
 
-	alexPointer := &alex
-	alexPointer.updateName("Alec")
+	alex.updateName("Alec")
 	alex.print() // Although we attempted to update Alex's first name to Alec, the update didn't seem to take effect. Explained in notes' point 3
 }
 
@@ -126,3 +125,7 @@ func (p person) print() {
 //
 //       *person is a type description - it means we're working with a pointer to a person. A.k.a. it means that this update main function can only be called with the receiver of a pointer to a person.
 //       *pointerToPerson is an operator - it means we want to manipulate the value the pointer is referencing
+//
+//    6.  Go allows us to take the shortcut and says hey if you have a variable that's just type of person but then your receiver is pointer to a person that's totally fine we'll just gloss
+//        over that fact for you and go will automatically turn your variable of type person into pointer person for you. That's why even though we removed alexPointer := &alex, the program
+//        still worked as intended
